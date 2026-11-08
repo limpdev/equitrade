@@ -5,20 +5,20 @@ Import `github.com/limpdev/equitrade` from this module. The package uses the Go 
 ```go
 import "github.com/limpdev/equitrade"
 
-func planExercise() (equity.OptionsResult, error) {
-	calc, err := equity.NewCalculator(equity.Config{
-		TaxRates: equity.TaxRates{Federal: 0.22, State: 12.50},
-		TaxModes: equity.TaxModes{State: equity.TaxFixed},
-		BrokerFees: equity.BrokerFees{
+func planExercise() (equitrade.OptionsResult, error) {
+	calc, err := equitrade.NewCalculator(equitrade.Config{
+		TaxRates: equitrade.TaxRates{Federal: 0.22, State: 12.50},
+		TaxModes: equitrade.TaxModes{State: equitrade.TaxFixed},
+		BrokerFees: equitrade.BrokerFees{
 			CommissionRate: 0.01,
 			MinimumFee:     1.00,
 		},
 	})
 	if err != nil {
-		return equity.OptionsResult{}, err
+		return equitrade.OptionsResult{}, err
 	}
-	plan, err := calc.CalculateOptions(equity.OptionsInput{
-		GrantType:       equity.NQOGrantType,
+	plan, err := calc.CalculateOptions(equitrade.OptionsInput{
+		GrantType:       equitrade.NQOGrantType,
 		ExercisePrice:   10,
 		ExercisedShares: 100,
 		FMV:             25,
