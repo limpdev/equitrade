@@ -1,9 +1,9 @@
 # Equity Plan Calculations
 
-Import `planq/equity` from this module. The package uses the Go standard library and takes all prices, tax inputs, and broker fees from the caller. A calculator snapshots its configuration at construction and can be shared across goroutines.
+Import `github.com/limpdev/equitrade` from this module. The package uses the Go standard library and takes all prices, tax inputs, and broker fees from the caller. A calculator snapshots its configuration at construction and can be shared across goroutines.
 
 ```go
-import "planq/equity"
+import "github.com/limpdev/equitrade"
 
 func planExercise() (equity.OptionsResult, error) {
 	calc, err := equity.NewCalculator(equity.Config{
@@ -40,7 +40,7 @@ The configuration above is illustrative. Use decimal rates in `TaxPercent` mode 
 | `CalculateSale` | Calculate gross and net proceeds, fees, and signed capital gain or loss for a sale with a caller-supplied total adjusted basis. |
 | `CalculateOptionsBatch` | Keep results and errors in input order. Summary totals and average FMV use successful rows. |
 
-### Pricing and Rounding
+## Pricing and Rounding
 
 Options planning uses exercise FMV when the sale price is omitted. Verification requires a fill price. For RSUs, both planning and verification require a sale price. A fill below strike can produce a cash shortfall.
 
@@ -53,4 +53,3 @@ The API takes and returns `float64` to match PlanQ’s existing JSON payloads. I
 ISO sell-to-cover assumes vested shares and a disqualifying sale in which a loss would be recognizable. The income cap uses gross sale price and estimates fees separately. Federal income withholding, Medicare, and Social Security are excluded on the ISO path. [IRS Publication 15-B](https://www.irs.gov/publications/p15b), [IRS Publication 525](https://www.irs.gov/publications/p525), [26 CFR § 1.422-1](https://www.govinfo.gov/content/pkg/CFR-2024-title26-vol7/pdf/CFR-2024-title26-vol7-sec1-422-1.pdf).
 
 Payroll thresholds, wage bases, AMT, qualifying dispositions, lot selection, and filing rules sit outside the package. Supply the applicable rates, broker fee schedule, payroll-calculated fixed amounts, and adjusted sale basis for your workflow.
-
